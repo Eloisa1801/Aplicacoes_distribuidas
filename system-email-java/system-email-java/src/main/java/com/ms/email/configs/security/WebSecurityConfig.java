@@ -3,7 +3,6 @@ package com.ms.email.configs.security;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -30,8 +29,8 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         //.anyRequest().permitAll() //igual ao padrão NoAuth
-                        .requestMatchers(HttpMethod.GET, "/sending-email").hasAnyRole("ADMIN","USER") //Comentar ao trabalhar com autenticação em memória ou sem roles
-                        .requestMatchers(HttpMethod.POST, "/sending-email").hasRole("ADMIN") //Comentar ao trabalhar com autenticação em memória ou sem roles
+                        // .requestMatchers(HttpMethod.GET, "/sending-email").hasAnyRole("ADMIN","USER") //Comentar ao trabalhar com autenticação em memória ou sem roles
+                        // .requestMatchers(HttpMethod.POST, "/sending-email").hasRole("ADMIN") //Comentar ao trabalhar com autenticação em memória ou sem roles
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
@@ -40,7 +39,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable); // :: é outra forma de referenciar um método
         return http.build();
     }
-/*
+
     @Bean
     public UserDetailsService userDetailsService() throws Exception { //Autenticação em memória
         //UserDetails user = User.withDefaultPasswordEncoder()
@@ -52,7 +51,7 @@ public class WebSecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(user);
     }
-*/
+
 //    @Bean
 //    public PasswordEncoder passwordEncoder() { //Outra classe de encoder que dá certo
 //        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
